@@ -1,5 +1,5 @@
 // URL del servidor local donde está corriendo json-server con la base de datos
-const API_URL = "http://localhost:3000";
+const API_URL = "http://l10.1.100.112:4000";
 
 // Seleccionamos los elementos del formulario de búsqueda usando querySelector
 const searchForm = document.querySelector("#search-form"); // Formulario de búsqueda
