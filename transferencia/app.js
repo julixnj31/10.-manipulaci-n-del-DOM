@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:4000";
 
 const searchForm = document.querySelector("#search-form");
 const searchButton = document.querySelector("#search-button");
