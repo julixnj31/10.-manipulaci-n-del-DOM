@@ -1,64 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Transferencia DOM</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <p>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus optio est tempore. Nisi magni tenetur doloribus
-    culpa amet fugiat vero nesciunt cum eos! Doloribus odio aut assumenda pariatur nisi velit?
-  </p>
-    <form novalidate id="formulario"> 
-    <div>
-      <label for="nombre">Nombre</label>
-      <input type="text" name="nombre" id="nombre" required>
-    </div>
-    <div>
-      <label for="apellido">Apellido</label>
-      <input type="text" name="apellido" id="apellido" required>
-    </div>
-    <div>
-      <label for="telefono">Teléfono</label>
-      <input type="text" name="telefono" id="telefono" required>
-    </div>
-    <div>
-      <label for="correo">Correo</label>
-      <input type="text" name="correo" id="correo" required>
-    </div>
-    <div id="habilidades">
-<!--      <div>
-        <label for="css">css</label>
-        <input type="checkbox" name="habilidad[]" id="css">
-      </div>
-      <div> 
-        <label for="html">html</label>
-        <input type="checkbox" name="habilidad[]" id="html">
-      </div>
-      <div>
-        <label for="python">python</label>
-        <input type="checkbox" name="habilidad[]" id="python">
-      </div>
-      <div>
-        <label for="javascript">javaScript</label>
-        <input type="checkbox" name="habilidad[]" id="javaScript">
-      </div>
-      <div>
-        <label for="sql">sql</label>
-        <input type="checkbox" name="habilidad[]" id="sql">
-      </div>
-    -->
-    </div>
-    <button>Enviar</button>
-  </form>
-  <div id="lista">
-    
-  </div>
-  <script src="app.js"> </script>
-</body>
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">Actividad de transferencia</p>
+      <h1>Gestion de tareas por usuario</h1>
+      <p class="hero-text">
+        Esta interfaz permite buscar un usuario existente en el servidor local y registrar
+        tareas sin recargar la pagina, usando eventos y manipulacion del DOM.
+      </p>
+    </header>
 
+    <section class="card">
+      <div class="card-header">
+        <h2>1. Buscar usuario</h2>
+        <span class="badge">DOM + fetch</span>
+      </div>
+
+      <form id="search-form" novalidate>
+        <div class="field">
+          <label for="documento">Documento</label>
+          <input
+            type="text"
+            id="documento"
+            name="documento"
+            placeholder="Ejemplo: 1001"
+            autocomplete="off"
+          >
+          <small>Busca un usuario que ya exista en la base de datos.</small>
+        </div>
+        <button type="submit" id="search-button">Buscar usuario</button>
+      </form>
+
+      <p id="search-feedback" class="feedback hidden"></p>
+
+      <article id="user-panel" class="user-panel hidden">
+        <h3>Usuario encontrado</h3>
+        <div class="user-grid">
+          <p><strong>Documento:</strong> <span id="user-document">-</span></p>
+          <p><strong>Nombre:</strong> <span id="user-name">-</span></p>
+          <p><strong>Correo:</strong> <span id="user-email">-</span></p>
+          <p><strong>ID:</strong> <span id="user-id">-</span></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>2. Registrar tarea</h2>
+        <span class="badge badge-muted">Se habilita al encontrar usuario</span>
+      </div>
+
+      <form id="task-form" novalidate aria-disabled="true">
+        <div class="field">
+          <label for="task-title">Titulo de la tarea</label>
+          <input
+            type="text"
+            id="task-title"
+            name="task-title"
+            placeholder="Ejemplo: Crear tabla dinamica"
+            disabled
+          >
+        </div>
+
+        <div class="field">
+          <label for="task-description">Descripcion</label>
+          <textarea
+            id="task-description"
+            name="task-description"
+            placeholder="Describe la tarea que vas a registrar"
+            rows="4"
+            disabled
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="task-status">Estado</label>
+          <select id="task-status" name="task-status" disabled>
+            <option value="">Selecciona un estado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Completada">Completada</option>
+          </select>
+        </div>
+
+        <button type="submit" id="task-button" disabled>Guardar tarea</button>
+      </form>
+
+      <p id="task-feedback" class="feedback hidden"></p>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>3. Tareas registradas</h2>
+        <span id="task-count" class="badge">0 tareas</span>
+      </div>
+
+      <p id="empty-state" class="empty-state">
+        Busca un usuario para cargar sus tareas y habilitar el formulario.
+      </p>
+
+      <div id="table-wrapper" class="table-wrapper hidden">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Titulo</th>
+              <th>Descripcion</th>
+              <th>Estado</th>
+              <th>Usuario</th>
+            </tr>
+          </thead>
+          <tbody id="tasks-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
 </html>
