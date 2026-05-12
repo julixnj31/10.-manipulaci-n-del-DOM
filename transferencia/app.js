@@ -164,17 +164,21 @@ function prependTask(task) {
 }
 
 // Consulta el usuario en el servidor usando el numero de documento.
+// Si la consulta exacta en el servidor no devuelve resultados, se filtra en el cliente.
 async function searchUserByDocument(documentNumber) {
-  const response = await fetch(
-    `${API_URL}/users?documento=${encodeURIComponent(documentNumber)}`
-  );
+  const response = await fetch(`${API_URL}/users`);
 
   if (!response.ok) {
     throw new Error("No se pudo consultar el usuario.");
   }
 
   const users = await response.json();
-  return users[0] ?? null;
+  const normalizedDocument = cleanValue(String(documentNumber));
+  const user = users.find(
+    (item) => cleanValue(String(item.documento)) === normalizedDocument
+  );
+
+  return user ?? null;
 }
 
 // Carga las tareas que ya estaban asociadas al usuario encontrado.
