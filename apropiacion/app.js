@@ -82,3 +82,24 @@ function handleInputChange() {
 
 }
 
+// 12
+
+// Evento submit formulario
+formulario.addEventListener(
+  "submit",
+  handleFormSubmit
+);
+
+
+// Evento input nombre
+usuarioInput.addEventListener(
+  "input",
+  handleInputChange
+);
+
+
+// Evento input mensaje
+mensajeInput.addEventListener(
+  "input",
+  handleInputChange
+);
