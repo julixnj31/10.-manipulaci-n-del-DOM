@@ -1,298 +1,298 @@
-:root {
-  --bg: #f4efe6;
-  --surface: #fffaf2;
-  --surface-strong: #ffffff;
-  --text: #1f2933;
-  --muted: #52606d;
-  --border: #d9cbb5;
-  --accent: #9d4edd;
-  --accent-dark: #6d28d9;
-  --success-bg: #e7f8ee;
-  --success-text: #166534;
-  --error-bg: #fdecec;
-  --error-text: #991b1b;
-  --info-bg: #eef4ff;
-  --info-text: #1d4ed8;
+:root { /* Define variables CSS globales para colores y valores reutilizables */
+  --bg: #f4efe6; /* Color de fondo principal (beige claro) */
+  --surface: #fffaf2; /* Color para superficies secundarias */
+  --surface-strong: #ffffff; /* Blanco puro para elementos destacados */
+  --text: #1f2933; /* Color de texto principal (gris oscuro) */
+  --muted: #52606d; /* Color de texto secundario (gris medio) */
+  --border: #d9cbb5; /* Color de bordes (beige) */
+  --accent: #9d4edd; /* Color acento principal (morado) */
+  --accent-dark: #6d28d9; /* Color acento oscuro (morado fuerte) */
+  --success-bg: #e7f8ee; /* Fondo para mensajes de éxito (verde claro) */
+  --success-text: #166534; /* Texto para mensajes de éxito (verde oscuro) */
+  --error-bg: #fdecec; /* Fondo para mensajes de error (rojo claro) */
+  --error-text: #991b1b; /* Texto para mensajes de error (rojo oscuro) */
+  --info-bg: #eef4ff; /* Fondo para mensajes informativos (azul claro) */
+  --info-text: #1d4ed8; /* Texto para mensajes informativos (azul oscuro) */
 }
 
-* {
+* { /* Aplica box-sizing border-box a todos los elementos para incluir padding y border en el ancho */
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(157, 78, 221, 0.14), transparent 28%),
-    linear-gradient(180deg, #f9f4ec 0%, #f4efe6 55%, #ebe3d7 100%);
+body { /* Estilos para el cuerpo de la página */
+  margin: 0; /* Elimina márgenes por defecto */
+  min-height: 100vh; /* Altura mínima de toda la ventana */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
+  color: var(--text); /* Color de texto usando variable */
+  background: /* Fondo degradado con gradientes */
+    radial-gradient(circle at top right, rgba(157, 78, 221, 0.14), transparent 28%), /* Círculo morado transparente arriba derecha */
+    linear-gradient(180deg, #f9f4ec 0%, #f4efe6 55%, #ebe3d7 100%); /* Degradado lineal de beige claro a oscuro */
 }
 
-.container {
-  width: min(960px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 40px 0 48px;
+.container { /* Contenedor principal centrado */
+  width: min(960px, calc(100% - 32px)); /* Ancho máximo 960px o 100% menos 32px */
+  margin: 0 auto; /* Centrado horizontal */
+  padding: 40px 0 48px; /* Padding superior e inferior */
 }
 
-.hero {
-  margin-bottom: 24px;
-  padding: 28px;
-  border: 1px solid rgba(157, 78, 221, 0.12);
-  border-radius: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(249, 236, 255, 0.88));
-  box-shadow: 0 18px 48px rgba(31, 41, 51, 0.08);
+.hero { /* Estilos para el encabezado principal */
+  margin-bottom: 24px; /* Margen inferior */
+  padding: 28px; /* Padding interno */
+  border: 1px solid rgba(157, 78, 221, 0.12); /* Borde morado transparente */
+  border-radius: 24px; /* Bordes redondeados */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(249, 236, 255, 0.88)); /* Fondo degradado blanco con morado */
+  box-shadow: 0 18px 48px rgba(31, 41, 51, 0.08); /* Sombra suave */
 }
 
-.eyebrow {
-  margin: 0 0 10px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent-dark);
+.eyebrow { /* Estilos para el texto pequeño encima del título */
+  margin: 0 0 10px; /* Margen inferior */
+  font-size: 0.85rem; /* Tamaño de fuente pequeño */
+  font-weight: 700; /* Negrita */
+  letter-spacing: 0.08em; /* Espaciado entre letras */
+  text-transform: uppercase; /* Convierte texto a mayúsculas */
+  color: var(--accent-dark); /* Color morado oscuro */
 }
 
-.hero h1 {
-  margin: 0 0 12px;
-  font-size: clamp(2rem, 4vw, 3rem);
+.hero h1 { /* Estilos para el título h1 dentro del hero */
+  margin: 0 0 12px; /* Margen inferior */
+  font-size: clamp(2rem, 4vw, 3rem); /* Tamaño responsivo: mínimo 2rem, máximo 3rem, escala con viewport */
 }
 
-.hero-text {
-  margin: 0;
-  max-width: 760px;
-  color: var(--muted);
-  line-height: 1.6;
+.hero-text { /* Estilos para el párrafo descriptivo */
+  margin: 0; /* Sin margen */
+  max-width: 760px; /* Ancho máximo */
+  color: var(--muted); /* Color gris medio */
+  line-height: 1.6; /* Altura de línea para mejor legibilidad */
 }
 
-.card {
-  margin-bottom: 20px;
-  padding: 24px;
-  border: 1px solid rgba(217, 203, 181, 0.9);
-  border-radius: 22px;
-  background: rgba(255, 250, 242, 0.92);
-  box-shadow: 0 16px 36px rgba(31, 41, 51, 0.07);
+.card { /* Estilos para las secciones tipo tarjeta */
+  margin-bottom: 20px; /* Margen inferior entre tarjetas */
+  padding: 24px; /* Padding interno */
+  border: 1px solid rgba(217, 203, 181, 0.9); /* Borde beige semi-transparente */
+  border-radius: 22px; /* Bordes redondeados */
+  background: rgba(255, 250, 242, 0.92); /* Fondo beige claro semi-transparente */
+  box-shadow: 0 16px 36px rgba(31, 41, 51, 0.07); /* Sombra suave */
 }
 
-.card-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
+.card-header { /* Estilos para el encabezado de cada tarjeta */
+  display: flex; /* Layout flexbox */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+  align-items: center; /* Alinea verticalmente al centro */
+  justify-content: space-between; /* Espacia elementos a los extremos */
+  gap: 12px; /* Espacio entre elementos */
+  margin-bottom: 18px; /* Margen inferior */
 }
 
-.card-header h2,
-.user-panel h3 {
-  margin: 0;
+.card-header h2, /* Estilos para h2 en card-header */
+.user-panel h3 { /* y h3 en user-panel */
+  margin: 0; /* Sin margen */
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background: rgba(157, 78, 221, 0.12);
-  color: var(--accent-dark);
+.badge { /* Estilos para los badges (etiquetas pequeñas) */
+  display: inline-flex; /* Flex inline */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  padding: 8px 12px; /* Padding interno */
+  border-radius: 999px; /* Bordes completamente redondeados (círculo) */
+  font-size: 0.85rem; /* Tamaño de fuente pequeño */
+  font-weight: 700; /* Negrita */
+  background: rgba(157, 78, 221, 0.12); /* Fondo morado transparente */
+  color: var(--accent-dark); /* Texto morado oscuro */
 }
 
-.badge-muted {
-  background: rgba(82, 96, 109, 0.12);
-  color: var(--muted);
+.badge-muted { /* Estilos para badges atenuados */
+  background: rgba(82, 96, 109, 0.12); /* Fondo gris transparente */
+  color: var(--muted); /* Texto gris medio */
 }
 
-form {
-  display: grid;
-  gap: 16px;
+form { /* Estilos para todos los formularios */
+  display: grid; /* Layout grid */
+  gap: 16px; /* Espacio entre elementos del grid */
 }
 
-.field {
-  display: grid;
-  gap: 8px;
+.field { /* Estilos para cada campo de formulario */
+  display: grid; /* Layout grid */
+  gap: 8px; /* Espacio entre label e input */
 }
 
-label {
-  font-weight: 700;
+label { /* Estilos para todas las etiquetas */
+  font-weight: 700; /* Negrita */
 }
 
-input,
-textarea,
-select,
-button {
-  width: 100%;
-  border-radius: 14px;
-  font: inherit;
+input, /* Estilos para inputs */
+textarea, /* textareas */
+select, /* selects */
+button { /* y botones */
+  width: 100%; /* Ancho completo */
+  border-radius: 14px; /* Bordes redondeados */
+  font: inherit; /* Hereda fuente del padre */
 }
 
-input,
-textarea,
-select {
-  border: 1px solid var(--border);
-  padding: 12px 14px;
-  background: var(--surface-strong);
-  color: var(--text);
+input, /* Estilos específicos para inputs */
+textarea, /* textareas */
+select { /* y selects */
+  border: 1px solid var(--border); /* Borde beige */
+  padding: 12px 14px; /* Padding interno */
+  background: var(--surface-strong); /* Fondo blanco */
+  color: var(--text); /* Texto gris oscuro */
 }
 
-input:focus,
+input:focus, /* Estilos cuando los inputs están enfocados */
 textarea:focus,
 select:focus {
-  outline: 2px solid rgba(157, 78, 221, 0.25);
-  border-color: var(--accent);
+  outline: 2px solid rgba(157, 78, 221, 0.25); /* Outline morado transparente */
+  border-color: var(--accent); /* Borde morado */
 }
 
-small {
-  color: var(--muted);
+small { /* Estilos para texto pequeño (ayuda) */
+  color: var(--muted); /* Color gris medio */
 }
 
-button {
-  border: none;
-  padding: 14px 18px;
-  font-weight: 700;
-  color: #ffffff;
-  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+button { /* Estilos para todos los botones */
+  border: none; /* Sin borde */
+  padding: 14px 18px; /* Padding interno */
+  font-weight: 700; /* Negrita */
+  color: #ffffff; /* Texto blanco */
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent)); /* Fondo degradado morado */
+  cursor: pointer; /* Cursor de mano */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease; /* Transiciones suaves */
 }
 
-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(109, 40, 217, 0.22);
+button:hover:not(:disabled) { /* Estilos cuando el mouse pasa sobre botones no deshabilitados */
+  transform: translateY(-1px); /* Mueve el botón hacia arriba ligeramente */
+  box-shadow: 0 14px 28px rgba(109, 40, 217, 0.22); /* Agrega sombra morada */
 }
 
-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+button:disabled { /* Estilos para botones deshabilitados */
+  opacity: 0.55; /* Hace el botón semi-transparente */
+  cursor: not-allowed; /* Cursor de no permitido */
 }
 
-.feedback,
-.empty-state,
-.user-panel {
-  margin-top: 16px;
-  border-radius: 16px;
+.feedback, /* Estilos comunes para elementos de feedback */
+.empty-state, /* estado vacío */
+.user-panel { /* y panel de usuario */
+  margin-top: 16px; /* Margen superior */
+  border-radius: 16px; /* Bordes redondeados */
 }
 
-.feedback {
-  padding: 14px 16px;
-  border: 1px solid transparent;
+.feedback { /* Estilos específicos para mensajes de feedback */
+  padding: 14px 16px; /* Padding interno */
+  border: 1px solid transparent; /* Borde transparente por defecto */
 }
 
-.feedback.success {
-  background: var(--success-bg);
-  border-color: rgba(22, 101, 52, 0.18);
-  color: var(--success-text);
+.feedback.success { /* Estilos para feedback de éxito */
+  background: var(--success-bg); /* Fondo verde claro */
+  border-color: rgba(22, 101, 52, 0.18); /* Borde verde transparente */
+  color: var(--success-text); /* Texto verde oscuro */
 }
 
-.feedback.error {
-  background: var(--error-bg);
-  border-color: rgba(153, 27, 27, 0.18);
-  color: var(--error-text);
+.feedback.error { /* Estilos para feedback de error */
+  background: var(--error-bg); /* Fondo rojo claro */
+  border-color: rgba(153, 27, 27, 0.18); /* Borde rojo transparente */
+  color: var(--error-text); /* Texto rojo oscuro */
 }
 
-.feedback.info {
-  background: var(--info-bg);
-  border-color: rgba(29, 78, 216, 0.18);
-  color: var(--info-text);
+.feedback.info { /* Estilos para feedback informativo */
+  background: var(--info-bg); /* Fondo azul claro */
+  border-color: rgba(29, 78, 216, 0.18); /* Borde azul transparente */
+  color: var(--info-text); /* Texto azul oscuro */
 }
 
-.user-panel {
-  padding: 18px;
-  border: 1px solid rgba(157, 78, 221, 0.14);
-  background: rgba(255, 255, 255, 0.7);
+.user-panel { /* Estilos para el panel que muestra datos del usuario */
+  padding: 18px; /* Padding interno */
+  border: 1px solid rgba(157, 78, 221, 0.14); /* Borde morado transparente */
+  background: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
 }
 
-.user-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+.user-grid { /* Estilos para el grid de datos del usuario */
+  display: grid; /* Layout grid */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columnas de ancho igual */
+  gap: 12px; /* Espacio entre elementos */
 }
 
-.user-grid p,
-.empty-state {
-  margin: 0;
+.user-grid p, /* Estilos para párrafos en user-grid */
+.empty-state { /* y para empty-state */
+  margin: 0; /* Sin margen */
 }
 
-.empty-state {
-  padding: 18px;
-  color: var(--muted);
-  border: 1px dashed rgba(82, 96, 109, 0.25);
-  background: rgba(255, 255, 255, 0.55);
+.empty-state { /* Estilos para el mensaje de estado vacío */
+  padding: 18px; /* Padding interno */
+  color: var(--muted); /* Color gris medio */
+  border: 1px dashed rgba(82, 96, 109, 0.25); /* Borde punteado gris transparente */
+  background: rgba(255, 255, 255, 0.55); /* Fondo blanco semi-transparente */
 }
 
-.table-wrapper {
-  overflow-x: auto;
-  border: 1px solid rgba(217, 203, 181, 0.85);
-  border-radius: 18px;
+.table-wrapper { /* Estilos para el contenedor de la tabla */
+  overflow-x: auto; /* Scroll horizontal si es necesario */
+  border: 1px solid rgba(217, 203, 181, 0.85); /* Borde beige */
+  border-radius: 18px; /* Bordes redondeados */
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--surface-strong);
+table { /* Estilos para la tabla */
+  width: 100%; /* Ancho completo */
+  border-collapse: collapse; /* Colapsa bordes */
+  background: var(--surface-strong); /* Fondo blanco */
 }
 
-th,
-td {
-  padding: 14px 16px;
-  text-align: left;
-  border-bottom: 1px solid rgba(217, 203, 181, 0.75);
-  vertical-align: top;
+th, /* Estilos para celdas de encabezado */
+td { /* y celdas de datos */
+  padding: 14px 16px; /* Padding interno */
+  text-align: left; /* Alineación a la izquierda */
+  border-bottom: 1px solid rgba(217, 203, 181, 0.75); /* Borde inferior beige */
+  vertical-align: top; /* Alineación vertical arriba */
 }
 
-thead {
-  background: rgba(157, 78, 221, 0.08);
+thead { /* Estilos para el encabezado de la tabla */
+  background: rgba(157, 78, 221, 0.08); /* Fondo morado muy transparente */
 }
 
-tbody tr:last-child td {
-  border-bottom: none;
+tbody tr:last-child td { /* Estilos para la última fila de datos */
+  border-bottom: none; /* Sin borde inferior */
 }
 
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 108px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 700;
+.status-pill { /* Estilos para las etiquetas de estado (pills) */
+  display: inline-flex; /* Flex inline */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  min-width: 108px; /* Ancho mínimo */
+  padding: 7px 12px; /* Padding interno */
+  border-radius: 999px; /* Bordes completamente redondeados */
+  font-size: 0.82rem; /* Tamaño de fuente pequeño */
+  font-weight: 700; /* Negrita */
 }
 
-.status-pill.pendiente {
-  background: #fff2cc;
-  color: #92400e;
+.status-pill.pendiente { /* Estilos para estado "Pendiente" */
+  background: #fff2cc; /* Fondo amarillo claro */
+  color: #92400e; /* Texto marrón */
 }
 
-.status-pill.en-progreso {
-  background: #dbeafe;
-  color: #1d4ed8;
+.status-pill.en-progreso { /* Estilos para estado "En progreso" */
+  background: #dbeafe; /* Fondo azul claro */
+  color: #1d4ed8; /* Texto azul oscuro */
 }
 
-.status-pill.completada {
-  background: #dcfce7;
-  color: #166534;
+.status-pill.completada { /* Estilos para estado "Completada" */
+  background: #dcfce7; /* Fondo verde claro */
+  color: #166534; /* Texto verde oscuro */
 }
 
-.hidden {
-  display: none;
+.hidden { /* Clase para ocultar elementos */
+  display: none; /* No muestra el elemento */
 }
 
-@media (max-width: 720px) {
-  .container {
-    width: min(100% - 20px, 960px);
-    padding: 20px 0 28px;
+@media (max-width: 720px) { /* Media query para pantallas pequeñas (móviles) */
+  .container { /* Ajusta el contenedor en móviles */
+    width: min(100% - 20px, 960px); /* Ancho reducido */
+    padding: 20px 0 28px; /* Padding ajustado */
   }
 
-  .hero,
+  .hero, /* Ajusta hero y cards en móviles */
   .card {
-    padding: 18px;
-    border-radius: 18px;
+    padding: 18px; /* Padding reducido */
+    border-radius: 18px; /* Bordes menos redondeados */
   }
 
-  .user-grid {
-    grid-template-columns: 1fr;
+  .user-grid { /* Ajusta el grid de usuario en móviles */
+    grid-template-columns: 1fr; /* Una sola columna */
   }
 }
