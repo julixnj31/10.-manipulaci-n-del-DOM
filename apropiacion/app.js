@@ -72,3 +72,13 @@ document.addEventListener("DOMContentLoaded", async() => {
     habilidades.append(div)
   }
 })
+
+//  11
+// LIMPIAR ERRORES AL ESCRIBIR
+
+function handleInputChange() {
+
+  clearError();
+
+}
+

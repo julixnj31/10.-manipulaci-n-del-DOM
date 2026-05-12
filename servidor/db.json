@@ -1,0 +1,40 @@
+{
+  "users": [
+    { "id": 1, "name": "Ana Torres", "email": "ana.torres@mail.com" },
+    { "id": 2, "name": "Carlos Gómez", "email": "carlos.gomez@mail.com" },
+    { "id": 3, "name": "María López", "email": "maria.lopez@mail.com" },
+    { "id": 4, "name": "Juan Pérez", "email": "juan.perez@mail.com" },
+    { "id": 5, "name": "Laura Martínez", "email": "laura.martinez@mail.com" },
+    { "id": 6, "name": "Pedro Sánchez", "email": "pedro.sanchez@mail.com" },
+    { "id": 7, "name": "Sofía Ramírez", "email": "sofia.ramirez@mail.com" },
+    { "id": 8, "name": "Andrés Morales", "email": "andres.morales@mail.com" },
+    { "id": 9, "name": "Valentina Cruz", "email": "valentina.cruz@mail.com" },
+    { "id": 10, "name": "Diego Herrera", "email": "diego.herrera@mail.com" }
+  ],
+
+  "posts": [
+    { "id": 1, "userId": 1, "title": "Introducción a las API", "body": "Conceptos básicos sobre APIs y su importancia." },
+    { "id": 2, "userId": 2, "title": "HTTP y la web", "body": "Cómo funciona el protocolo HTTP." },
+    { "id": 3, "userId": 3, "title": "Arquitectura cliente-servidor", "body": "Modelo de comunicación en aplicaciones web." },
+    { "id": 4, "userId": 4, "title": "Método GET", "body": "Uso del método GET para consultar información." },
+    { "id": 5, "userId": 5, "title": "Método POST", "body": "Creación de recursos mediante POST." },
+    { "id": 6, "userId": 6, "title": "Método PUT", "body": "Actualización completa de recursos." },
+    { "id": 7, "userId": 7, "title": "Método PATCH", "body": "Actualización parcial de información." },
+    { "id": 8, "userId": 8, "title": "Método DELETE", "body": "Eliminación de recursos en una API." },
+    { "id": 9, "userId": 9, "title": "Códigos de estado", "body": "Interpretación de respuestas HTTP." },
+    { "id": 10, "userId": 10, "title": "Buenas prácticas API", "body": "Recomendaciones para diseñar APIs REST." }
+  ],
+
+  "comments": [
+    { "id": 1, "postId": 1, "name": "Comentario 1", "body": "Muy clara la explicación." },
+    { "id": 2, "postId": 1, "name": "Comentario 2", "body": "Buen contenido introductorio." },
+    { "id": 3, "postId": 2, "name": "Comentario 3", "body": "Ayuda a entender HTTP." },
+    { "id": 4, "postId": 3, "name": "Comentario 4", "body": "Buen ejemplo de arquitectura." },
+    { "id": 5, "postId": 4, "name": "Comentario 5", "body": "GET es muy usado en la práctica." },
+    { "id": 6, "postId": 5, "name": "Comentario 6", "body": "POST permite enviar datos." },
+    { "id": 7, "postId": 6, "name": "Comentario 7", "body": "PUT reemplaza la información." },
+    { "id": 8, "postId": 7, "name": "Comentario 8", "body": "PATCH es más eficiente." },
+    { "id": 9, "postId": 8, "name": "Comentario 9", "body": "DELETE debe usarse con cuidado." },
+    { "id": 10, "postId": 9, "name": "Comentario 10", "body": "Los códigos HTTP son importantes." }
+  ]
+}

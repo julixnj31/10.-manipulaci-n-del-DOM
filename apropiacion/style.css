@@ -1,31 +1,49 @@
 body {
-  background-color: rgb(249, 229, 202);
+  font-family: Arial;
+  background-color: #f2f2f2;
+  padding: 30px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-width: 450px;
+.container {
+  width: 500px;
   margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-form > div {
-  display: flex;
-  flex-direction: column;
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 button {
-  background-color: steelblue;
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  background: black;
+  color: white;
   border: none;
-  padding: 6px 0;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: cadetblue;
+  background: #333;
 }
 
 .error {
-border: solid 1px rgb(255, 0, 0)
+  color: red;
+  margin-top: 10px;
+}
+
+.mensaje {
+  background: #e7e7e7;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
 }
