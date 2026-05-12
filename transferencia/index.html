@@ -27,12 +27,13 @@
       <form id="search-form" novalidate> <!-- Formulario de búsqueda, sin validación nativa del navegador -->
         <div class="field"> <!-- Campo de entrada con label y ayuda -->
           <label for="documento">Documento</label> <!-- Etiqueta para el input, asociada por 'for' -->
-          <input <!-- Campo de texto para ingresar el documento del usuario -->
-            type="text" <!-- Tipo de input: texto -->
-            id="documento" <!-- ID único para seleccionar en JS -->
-            name="documento" <!-- Nombre del campo para envío de formulario -->
-            placeholder="Ejemplo: 1001" <!-- Texto de ejemplo que desaparece al escribir -->
-            autocomplete="off" <!-- Desactiva autocompletado del navegador -->
+          <!-- Campo de texto para ingresar el documento del usuario -->
+          <input
+            type="text"
+            id="documento"
+            name="documento"
+            placeholder="Ejemplo: 1001"
+            autocomplete="off"
           >
           <small>Busca un usuario que ya exista en la base de datos.</small> <!-- Texto de ayuda pequeño -->
         </div>
@@ -61,23 +62,25 @@
       <form id="task-form" novalidate aria-disabled="true"> <!-- Formulario de tareas, deshabilitado por defecto -->
         <div class="field"> <!-- Campo para el título de la tarea -->
           <label for="task-title">Titulo de la tarea</label> <!-- Etiqueta del campo -->
-          <input <!-- Input de texto para el título -->
-            type="text" <!-- Tipo texto -->
-            id="task-title" <!-- ID para JS -->
-            name="task-title" <!-- Nombre del campo -->
-            placeholder="Ejemplo: Crear tabla dinamica" <!-- Placeholder -->
-            disabled <!-- Deshabilitado inicialmente -->
+          <!-- Input de texto para el título -->
+          <input
+            type="text"
+            id="task-title"
+            name="task-title"
+            placeholder="Ejemplo: Crear tabla dinamica"
+            disabled
           >
         </div>
 
         <div class="field"> <!-- Campo para la descripción -->
           <label for="task-description">Descripcion</label> <!-- Etiqueta -->
-          <textarea <!-- Área de texto para descripción -->
-            id="task-description" <!-- ID -->
-            name="task-description" <!-- Nombre -->
-            placeholder="Describe la tarea que vas a registrar" <!-- Placeholder -->
-            rows="4" <!-- Número de filas -->
-            disabled <!-- Deshabilitado -->
+          <!-- Área de texto para descripción -->
+          <textarea
+            id="task-description"
+            name="task-description"
+            placeholder="Describe la tarea que vas a registrar"
+            rows="4"
+            disabled
           ></textarea>
         </div>
 
