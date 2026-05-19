@@ -1,109 +1,112 @@
 const API_URL = "http://10.1.100.223:3001";
 
-const searchForm = document.querySelector("#search-form");
-const searchButton = document.querySelector("#search-button");
-const documentInput = document.querySelector("#documento");
-const searchFeedback = document.querySelector("#search-feedback");
+// Seleccionamos los elementos del formulario de búsqueda usando querySelector
+const searchForm = document.querySelector("#search-form"); // Formulario de búsqueda
+const searchButton = document.querySelector("#search-button"); // Botón para buscar usuario
+const documentInput = document.querySelector("#documento"); // Campo de entrada para el documento
+const searchFeedback = document.querySelector("#search-feedback"); // Elemento para mostrar mensajes de feedback
+//  de búsqueda
 
-const userPanel = document.querySelector("#user-panel");
-const userDocument = document.querySelector("#user-document");
-const userName = document.querySelector("#user-name");
-const userEmail = document.querySelector("#user-email");
-const userId = document.querySelector("#user-id");
+// Seleccionamos los elementos del panel de usuario
+const userPanel = document.querySelector("#user-panel"); // Panel que muestra la info del usuario encontrado
+const userDocument = document.querySelector("#user-document"); // Span para mostrar el documento del usuario
+const userName = document.querySelector("#user-name"); // Span para mostrar el nombre del usuario
+const userEmail = document.querySelector("#user-email"); // Span para mostrar el email del usuario
+const userId = document.querySelector("#user-id"); // Span para mostrar el ID del usuario
 
-const taskForm = document.querySelector("#task-form");
-const taskButton = document.querySelector("#task-button");
-const taskTitle = document.querySelector("#task-title");
-const taskDescription = document.querySelector("#task-description");
-const taskStatus = document.querySelector("#task-status");
-const taskFeedback = document.querySelector("#task-feedback");
+// Seleccionamos los elementos del formulario de tareas
+const taskForm = document.querySelector("#task-form"); // Formulario para registrar tareas
+const taskButton = document.querySelector("#task-button"); // Botón para guardar la tarea
+const taskTitle = document.querySelector("#task-title"); // Campo para el título de la tarea
+const taskDescription = document.querySelector("#task-description"); // Campo para la descripción de la tarea
+const taskStatus = document.querySelector("#task-status"); // Select para el estado de la tarea
+const taskFeedback = document.querySelector("#task-feedback"); // Elemento para mostrar mensajes de feedback de tareas
 
-const taskCount = document.querySelector("#task-count");
-const emptyState = document.querySelector("#empty-state");
-const tableWrapper = document.querySelector("#table-wrapper");
-const tasksBody = document.querySelector("#tasks-body");
+// Seleccionamos los elementos de la tabla de tareas
+const taskCount = document.querySelector("#task-count"); // Badge que muestra el número de tareas
+const emptyState = document.querySelector("#empty-state"); // Mensaje cuando no hay tareas
+const tableWrapper = document.querySelector("#table-wrapper"); // Contenedor de la tabla
+const tasksBody = document.querySelector("#tasks-body"); // Cuerpo de la tabla donde se insertan las filas
 
-let currentUser = null;
-let totalTasks = 0;
+// Variables globales para mantener el estado de la aplicación
+let currentUser = null; // Usuario actualmente seleccionado (null si no hay ninguno)
+let totalTasks = 0; // Número total de tareas mostradas en la tabla
 
-// Limpia espacios al inicio y al final para validar mejor los datos.
+// Función para limpiar espacios en blanco al inicio y final de un valor (útil para validaciones)
 function cleanValue(value) {
-  return value.trim();
+  return value.trim(); // Retorna el valor sin espacios al inicio y final
 }
 
-// Muestra mensajes de ayuda, error o exito debajo del formulario.
+// Función para mostrar mensajes de feedback (éxito, error, info) debajo de los formularios
 function showFeedback(element, message, type) {
-  element.textContent = message;
-  element.className = `feedback ${type}`;
-  element.classList.remove("hidden");
+  element.textContent = message; // Establece el texto del mensaje
+  element.className = `feedback ${type}`; // Aplica clases CSS para el tipo de mensaje (success, error, info)
+  element.classList.remove("hidden"); // Hace visible el elemento removiendo la clase 'hidden'
 }
 
-// Oculta un mensaje cuando ya no es necesario mostrarlo.
+// Función para ocultar mensajes de feedback cuando ya no son necesarios
 function hideFeedback(element) {
-  element.textContent = "";
-  element.className = "feedback hidden";
+  element.textContent = ""; // Limpia el texto del mensaje
+  element.className = "feedback hidden"; // Aplica la clase 'hidden' para ocultar el elemento
 }
 
-// Actualiza el contador visual con la cantidad de tareas visibles.
+// Función para actualizar el contador de tareas en el badge
 function updateTaskCount() {
-  const label = totalTasks === 1 ? "tarea" : "tareas";
-  taskCount.textContent = `${totalTasks} ${label}`;
+  const label = totalTasks === 1 ? "tarea" : "tareas"; // Determina si usar singular o plural
+  taskCount.textContent = `${totalTasks} ${label}`; // Actualiza el texto del badge
 }
 
-// Muestra un texto cuando todavia no hay tareas para renderizar.
+// Función para mostrar el estado vacío cuando no hay tareas
 function showEmptyState(message) {
-  emptyState.textContent = message;
-  emptyState.classList.remove("hidden");
-  tableWrapper.classList.add("hidden");
+  emptyState.textContent = message; // Establece el mensaje de estado vacío
+  emptyState.classList.remove("hidden"); // Hace visible el mensaje
+  tableWrapper.classList.add("hidden"); // Oculta la tabla
 }
 
-// Oculta el estado vacio cuando ya existen filas dentro de la tabla.
+// Función para ocultar el estado vacío cuando hay tareas
 function hideEmptyState() {
-  emptyState.classList.add("hidden");
-  tableWrapper.classList.remove("hidden");
+  emptyState.classList.add("hidden"); // Oculta el mensaje de estado vacío
+  tableWrapper.classList.remove("hidden"); // Hace visible la tabla
 }
 
-// Borra los datos del usuario cuando la busqueda falla o cambia.
+// Función para limpiar el panel de usuario cuando la búsqueda falla
 function clearUserPanel() {
-  userDocument.textContent = "-";
-  userName.textContent = "-";
-  userEmail.textContent = "-";
-  userId.textContent = "-";
-  userPanel.classList.add("hidden");
+  userDocument.textContent = "-"; // Resetea el documento a guion
+  userName.textContent = "-"; // Resetea el nombre a guion
+  userEmail.textContent = "-"; // Resetea el email a guion
+  userId.textContent = "-"; // Resetea el ID a guion
+  userPanel.classList.add("hidden"); // Oculta el panel de usuario
 }
 
-// Inserta en pantalla los datos del usuario encontrado en la consulta.
+// Función para renderizar (mostrar) la información del usuario encontrado
 function renderUser(user) {
-  userDocument.textContent = user.documento;
-  userName.textContent = user.name;
-  userEmail.textContent = user.email;
-  userId.textContent = user.id;
-  userPanel.classList.remove("hidden");
+  userDocument.textContent = user.documento; // Muestra el documento del usuario
+  userName.textContent = user.name; // Muestra el nombre del usuario
+  userEmail.textContent = user.email; // Muestra el email del usuario
+  userId.textContent = user.id; // Muestra el ID del usuario
+  userPanel.classList.remove("hidden"); // Hace visible el panel de usuario
 }
 
-// Activa o bloquea el formulario de tareas segun el resultado de la busqueda.
+// Función para activar o desactivar el formulario de tareas según si hay usuario seleccionado
 function toggleTaskForm(enabled) {
-  const elements = taskForm.querySelectorAll("input, textarea, select, button");
-
+  const elements = taskForm.querySelectorAll("input, textarea, select, button"); // Selecciona todos los elementos del formulario
   elements.forEach((element) => {
-    element.disabled = !enabled;
+    element.disabled = !enabled; // Deshabilita o habilita cada elemento
   });
-
-  taskForm.setAttribute("aria-disabled", String(!enabled));
-
+  taskForm.setAttribute("aria-disabled", String(!enabled)); // Actualiza atributo de accesibilidad
   if (!enabled) {
-    taskForm.reset();
+    taskForm.reset(); // Resetea el formulario si se deshabilita
   }
 }
 
-// Crea una celda de la tabla para reutilizar la misma estructura.
+// Función para crear una celda de tabla reutilizable
 function createCell(content) {
-  const cell = document.createElement("td");
-  cell.textContent = content;
-  return cell;
+  const cell = document.createElement("td"); // Crea un elemento <td>
+  cell.textContent = content; // Establece el contenido de texto
+  return cell; // Retorna la celda creada
 }
 
-// Crea una etiqueta visual para distinguir el estado de la tarea.
+// Función para crear una etiqueta visual (pill) para el estado de la tarea
 function createStatusPill(status) {
   const pill = document.createElement("span");
   const statusClass = status.toLowerCase().replace(/\s+/g, "-");
@@ -173,72 +176,60 @@ function mergeServerAndLocalTasks(serverTasks, userId) {
 
 // Construye dinamicamente una fila de la tabla con la informacion de la tarea.
 function createTaskRow(task) {
-  const row = document.createElement("tr");
-  const statusCell = document.createElement("td");
-
-  statusCell.appendChild(createStatusPill(task.status));
-
-  row.append(
-    createCell(String(task.id)),
-    createCell(task.title),
-    createCell(task.description),
-    statusCell,
-    createCell(task.userName)
+  const row = document.createElement("tr"); // Crea un elemento <tr>
+  const statusCell = document.createElement("td"); // Crea una celda para el estado
+  statusCell.appendChild(createStatusPill(task.status)); // Agrega el pill del estado a la celda
+  row.append( // Agrega todas las celdas a la fila
+    createCell(String(task.id)), // Celda para el ID
+    createCell(task.title), // Celda para el título
+    createCell(task.description), // Celda para la descripción
+    statusCell, // Celda para el estado
+    createCell(task.userName) // Celda para el nombre del usuario
   );
-
-  return row;
+  return row; // Retorna la fila creada
 }
 
-// Reemplaza el contenido de la tabla para mostrar las tareas del usuario actual.
+// Función para renderizar todas las tareas en la tabla
 function renderTasks(tasks) {
-  tasksBody.replaceChildren();
-
-  const sortedTasks = [...tasks].sort((firstTask, secondTask) => {
+  tasksBody.replaceChildren(); // Limpia todas las filas existentes
+  const sortedTasks = [...tasks].sort((firstTask, secondTask) => { // Ordena las tareas por ID descendente
     return (secondTask.id ?? 0) - (firstTask.id ?? 0);
   });
-
-  totalTasks = sortedTasks.length;
-  updateTaskCount();
-
-  if (sortedTasks.length === 0) {
-    showEmptyState("Este usuario aun no tiene tareas registradas.");
-    return;
+  totalTasks = sortedTasks.length; // Actualiza el contador total
+  updateTaskCount(); // Actualiza el badge del contador
+  if (sortedTasks.length === 0) { // Si no hay tareas
+    showEmptyState("Este usuario aun no tiene tareas registradas."); // Muestra mensaje vacío
+    return; // Sale de la función
   }
-
-  sortedTasks.forEach((task) => {
-    tasksBody.appendChild(createTaskRow(task));
+  sortedTasks.forEach((task) => { // Para cada tarea ordenada
+    tasksBody.appendChild(createTaskRow(task)); // Agrega la fila a la tabla
   });
-
-  hideEmptyState();
+  hideEmptyState(); // Oculta el mensaje vacío
 }
 
-// Agrega solo la nueva tarea al inicio de la tabla sin volver a pintar todo.
+// Función para agregar una nueva tarea al inicio de la tabla sin recargar todo
 function prependTask(task) {
-  tasksBody.prepend(createTaskRow(task));
-  totalTasks += 1;
-  updateTaskCount();
-  hideEmptyState();
+  tasksBody.prepend(createTaskRow(task)); // Agrega la fila al inicio
+  totalTasks += 1; // Incrementa el contador
+  updateTaskCount(); // Actualiza el badge
+  hideEmptyState(); // Oculta el mensaje vacío
 }
 
-// Consulta el usuario en el servidor usando el numero de documento.
-// Si la consulta exacta en el servidor no devuelve resultados, se filtra en el cliente.
+// Función asíncrona para buscar un usuario por su documento
 async function searchUserByDocument(documentNumber) {
-  const response = await fetch(`${API_URL}/users`);
-
-  if (!response.ok) {
-    throw new Error("No se pudo consultar el usuario.");
+  const response = await fetch(`${API_URL}/users`); // Hace una petición GET a la API de usuarios
+  if (!response.ok) { // Si la respuesta no es exitosa
+    throw new Error("No se pudo consultar el usuario."); // Lanza un error
   }
-
-  const users = await response.json();
-  const normalizedDocument = cleanValue(String(documentNumber));
-  const user = users.find(
-    (item) => cleanValue(String(item.documento)) === normalizedDocument
+  const users = await response.json(); // Convierte la respuesta a JSON
+  const normalizedDocument = cleanValue(String(documentNumber)); // Normaliza el documento de entrada
+  const user = users.find( // Busca en la lista de usuarios
+    (item) => cleanValue(String(item.documento)) === normalizedDocument // Compara documentos normalizados
   );
-
-  return user ?? null;
+  return user ?? null; // Retorna el usuario encontrado o null
 }
 
-// Carga las tareas que ya estaban asociadas al usuario encontrado.
+// Función asíncrona para cargar las tareas de un usuario específico
 async function loadTasksByUser(userIdValue) {
   try {
     const response = await fetch(`${API_URL}/tareas?userId=${userIdValue}`);
@@ -259,7 +250,7 @@ async function loadTasksByUser(userIdValue) {
   }
 }
 
-// Guarda una nueva tarea en el servidor local sin recargar la pagina.
+// Función asíncrona para guardar una nueva tarea en el servidor
 async function saveTask(taskData) {
   try {
     const response = await fetch(`${API_URL}/tareas`, {
@@ -291,156 +282,140 @@ async function saveTask(taskData) {
 
 // Valida que el documento no este vacio antes de buscar al usuario.
 function validateSearchForm() {
-  const documentNumber = cleanValue(documentInput.value);
-
-  if (documentNumber === "") {
-    showFeedback(
+  const documentNumber = cleanValue(documentInput.value); // Limpia el valor del input
+  if (documentNumber === "") { // Si está vacío
+    showFeedback( // Muestra mensaje de error
       searchFeedback,
       "Debes escribir un documento para realizar la busqueda.",
       "error"
     );
-    showEmptyState("Ingresa un documento valido para iniciar la consulta.");
-    return null;
+    showEmptyState("Ingresa un documento valido para iniciar la consulta."); // Muestra estado vacío
+    return null; // Retorna null para indicar error
   }
-
-  return documentNumber;
+  return documentNumber; // Retorna el documento válido
 }
 
-// Valida que todos los datos de la tarea existan antes de enviarlos.
+// Función para validar el formulario de tareas
 function validateTaskForm() {
-  const title = cleanValue(taskTitle.value);
-  const description = cleanValue(taskDescription.value);
-  const status = taskStatus.value;
-
-  if (title === "" || description === "" || status === "") {
-    showFeedback(
+  const title = cleanValue(taskTitle.value); // Limpia título
+  const description = cleanValue(taskDescription.value); // Limpia descripción
+  const status = taskStatus.value; // Obtiene estado
+  if (title === "" || description === "" || status === "") { // Si algún campo vacío
+    showFeedback( // Muestra error
       taskFeedback,
       "Todos los campos de la tarea son obligatorios.",
       "error"
     );
-    return null;
+    return null; // Error
   }
-
-  return { title, description, status };
+  return { title, description, status }; // Retorna objeto con datos válidos
 }
 
-// Maneja la busqueda del usuario y actualiza el DOM con los resultados.
+// Función asíncrona para manejar el envío del formulario de búsqueda
 async function handleSearchSubmit(event) {
-  event.preventDefault();
-  hideFeedback(searchFeedback);
+  event.preventDefault(); // Previene recarga de página
+  hideFeedback(searchFeedback); // Oculta feedbacks previos
   hideFeedback(taskFeedback);
-
-  const documentNumber = validateSearchForm();
-
-  if (!documentNumber) {
-    currentUser = null;
-    clearUserPanel();
-    toggleTaskForm(false);
-    renderTasks([]);
-    return;
+  const documentNumber = validateSearchForm(); // Valida el formulario
+  if (!documentNumber) { // Si no válido
+    currentUser = null; // Resetea usuario
+    clearUserPanel(); // Limpia panel
+    toggleTaskForm(false); // Deshabilita formulario de tareas
+    renderTasks([]); // Limpia tabla
+    return; // Sale
   }
-
-  searchButton.disabled = true;
-  clearUserPanel();
-  toggleTaskForm(false);
-  tasksBody.replaceChildren();
-  showFeedback(searchFeedback, "Buscando usuario en el servidor local...", "info");
-  showEmptyState("Consultando informacion del usuario...");
-
+  searchButton.disabled = true; // Deshabilita botón mientras busca
+  clearUserPanel(); // Limpia panel
+  toggleTaskForm(false); // Deshabilita tareas
+  tasksBody.replaceChildren(); // Limpia tabla
+  showFeedback(searchFeedback, "Buscando usuario en el servidor local...", "info"); // Mensaje de búsqueda
+  showEmptyState("Consultando informacion del usuario..."); // Estado vacío
   try {
-    const user = await searchUserByDocument(documentNumber);
-
-    if (!user) {
-      currentUser = null;
-      renderTasks([]);
-      showEmptyState("No hay tareas para mostrar porque el usuario no existe.");
-      showFeedback(
+    const user = await searchUserByDocument(documentNumber); // Busca usuario
+    if (!user) { // Si no encontrado
+      currentUser = null; // Resetea
+      renderTasks([]); // Limpia tabla
+      showEmptyState("No hay tareas para mostrar porque el usuario no existe."); // Mensaje vacío
+      showFeedback( // Error
         searchFeedback,
         "El usuario no esta registrado en el sistema.",
         "error"
       );
-      return;
+      return; // Sale
     }
-
-    currentUser = user;
-    renderUser(user);
-    toggleTaskForm(true);
-    showFeedback(
+    currentUser = user; // Establece usuario actual
+    renderUser(user); // Muestra usuario
+    toggleTaskForm(true); // Habilita formulario de tareas
+    showFeedback( // Éxito
       searchFeedback,
       "Usuario encontrado. Ya puedes registrar tareas.",
       "success"
     );
-
-    const tasks = await loadTasksByUser(user.id);
-    renderTasks(tasks);
-  } catch (error) {
-    currentUser = null;
-    clearUserPanel();
-    toggleTaskForm(false);
-    renderTasks([]);
-    showEmptyState("No fue posible conectarse con el servidor local.");
-    showFeedback(
+    const tasks = await loadTasksByUser(user.id); // Carga tareas del usuario
+    renderTasks(tasks); // Muestra tareas
+  } catch (error) { // Si hay error en la petición
+    currentUser = null; // Resetea
+    clearUserPanel(); // Limpia
+    toggleTaskForm(false); // Deshabilita
+    renderTasks([]); // Limpia tabla
+    showEmptyState("No fue posible conectarse con el servidor local."); // Mensaje vacío
+    showFeedback( // Error de conexión
       searchFeedback,
       "No se pudo consultar el servidor. Revisa que json-server este activo.",
       "error"
     );
   } finally {
-    searchButton.disabled = false;
+    searchButton.disabled = false; // Rehabilita botón
   }
 }
 
-// Maneja el registro de nuevas tareas y las agrega al DOM en tiempo real.
+// Función asíncrona para manejar el envío del formulario de tareas
 async function handleTaskSubmit(event) {
-  event.preventDefault();
-  hideFeedback(taskFeedback);
-
-  if (!currentUser) {
-    showFeedback(
+  event.preventDefault(); // Previene recarga
+  hideFeedback(taskFeedback); // Oculta feedbacks
+  if (!currentUser) { // Si no hay usuario seleccionado
+    showFeedback( // Error
       taskFeedback,
       "Primero debes buscar un usuario valido.",
       "error"
     );
-    return;
+    return; // Sale
   }
-
-  const taskData = validateTaskForm();
-
-  if (!taskData) {
-    return;
+  const taskData = validateTaskForm(); // Valida formulario
+  if (!taskData) { // Si no válido
+    return; // Sale
   }
-
-  taskButton.disabled = true;
-  showFeedback(taskFeedback, "Guardando tarea en el servidor...", "info");
-
+  taskButton.disabled = true; // Deshabilita botón
+  showFeedback(taskFeedback, "Guardando tarea en el servidor...", "info"); // Mensaje de guardado
   try {
-    const newTask = await saveTask({
-      userId: currentUser.id,
-      documento: currentUser.documento,
-      userName: currentUser.name,
-      title: taskData.title,
-      description: taskData.description,
-      status: taskData.status
+    const newTask = await saveTask({ // Guarda tarea
+      userId: currentUser.id, // ID del usuario
+      documento: currentUser.documento, // Documento del usuario
+      userName: currentUser.name, // Nombre del usuario
+      title: taskData.title, // Título de la tarea
+      description: taskData.description, // Descripción
+      status: taskData.status // Estado
     });
-
-    prependTask(newTask);
-    taskForm.reset();
-    taskTitle.focus();
-    showFeedback(taskFeedback, "Tarea registrada correctamente.", "success");
-  } catch (error) {
-    showFeedback(
+    prependTask(newTask); // Agrega tarea a la tabla
+    taskForm.reset(); // Resetea formulario
+    taskTitle.focus(); // Enfoca el campo de título
+    showFeedback(taskFeedback, "Tarea registrada correctamente.", "success"); // Éxito
+  } catch (error) { // Si falla
+    showFeedback( // Error
       taskFeedback,
       "No se pudo guardar la tarea. Verifica el servidor local.",
       "error"
     );
   } finally {
-    taskButton.disabled = false;
+    taskButton.disabled = false; // Rehabilita botón
   }
 }
 
-// Estado inicial de la pagina antes de interactuar con el servidor.
-toggleTaskForm(false);
-updateTaskCount();
-showEmptyState("Busca un usuario para cargar sus tareas y habilitar el formulario.");
+// Configuración inicial de la página
+toggleTaskForm(false); // Deshabilita formulario de tareas al inicio
+updateTaskCount(); // Actualiza contador (0 tareas)
+showEmptyState("Busca un usuario para cargar sus tareas y habilitar el formulario."); // Mensaje inicial vacío
 
-searchForm.addEventListener("submit", handleSearchSubmit);
-taskForm.addEventListener("submit", handleTaskSubmit);
+// Agrega event listeners para los formularios
+searchForm.addEventListener("submit", handleSearchSubmit); // Escucha envío de búsqueda
+taskForm.addEventListener("submit", handleTaskSubmit); // Escucha envío de tarea
