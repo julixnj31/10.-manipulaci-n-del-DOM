@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "http://10.1.100.223:3001";
 
 const searchForm = document.querySelector("#search-form");
 const searchButton = document.querySelector("#search-button");
@@ -114,6 +114,63 @@ function createStatusPill(status) {
   return pill;
 }
 
+// Obtiene la clave de localStorage para guardar las tareas de un usuario.
+function getTaskStorageKey(userId) {
+  return `tareas-usuario-${userId}`;
+}
+
+// Carga tareas desde localStorage para un usuario. Esto permite que las tareas permanezcan al recargar.
+function loadTasksFromStorage(userId) {
+  const key = getTaskStorageKey(userId);
+  const storedValue = localStorage.getItem(key);
+
+  if (!storedValue) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(storedValue);
+  } catch (error) {
+    return [];
+  }
+}
+
+// Guarda el arreglo de tareas del usuario en localStorage.
+function saveTasksToStorage(userId, tasks) {
+  const key = getTaskStorageKey(userId);
+  localStorage.setItem(key, JSON.stringify(tasks));
+}
+
+// Agrega o actualiza una tarea en el almacenamiento local.
+function persistTaskLocally(task, userId) {
+  const storedTasks = loadTasksFromStorage(userId);
+  const existingTaskIndex = storedTasks.findIndex((item) => item.id === task.id);
+
+  if (existingTaskIndex === -1) {
+    storedTasks.push(task);
+  } else {
+    storedTasks[existingTaskIndex] = task;
+  }
+
+  saveTasksToStorage(userId, storedTasks);
+}
+
+// Mezcla tareas del servidor con las tareas guardadas localmente para evitar duplicados.
+function mergeServerAndLocalTasks(serverTasks, userId) {
+  const localTasks = loadTasksFromStorage(userId);
+  const seenIds = new Set(serverTasks.map((task) => task.id));
+
+  const mergedTasks = [...serverTasks];
+
+  localTasks.forEach((localTask) => {
+    if (!seenIds.has(localTask.id)) {
+      mergedTasks.push(localTask);
+    }
+  });
+
+  return mergedTasks;
+}
+
 // Construye dinamicamente una fila de la tabla con la informacion de la tarea.
 function createTaskRow(task) {
   const row = document.createElement("tr");
@@ -183,30 +240,53 @@ async function searchUserByDocument(documentNumber) {
 
 // Carga las tareas que ya estaban asociadas al usuario encontrado.
 async function loadTasksByUser(userIdValue) {
-  const response = await fetch(`${API_URL}/tareas?userId=${userIdValue}`);
+  try {
+    const response = await fetch(`${API_URL}/tareas?userId=${userIdValue}`);
 
-  if (!response.ok) {
-    throw new Error("No se pudieron cargar las tareas.");
+    if (!response.ok) {
+      throw new Error("No se pudieron cargar las tareas.");
+    }
+
+    const serverTasks = await response.json();
+    const mergedTasks = mergeServerAndLocalTasks(serverTasks, userIdValue);
+
+    // Guardamos localmente el resultado combinado para que quede persistido en el navegador.
+    saveTasksToStorage(userIdValue, mergedTasks);
+    return mergedTasks;
+  } catch (error) {
+    // Si falla la consulta al servidor, devolvemos las tareas guardadas en localStorage.
+    return loadTasksFromStorage(userIdValue);
   }
-
-  return response.json();
 }
 
 // Guarda una nueva tarea en el servidor local sin recargar la pagina.
 async function saveTask(taskData) {
-  const response = await fetch(`${API_URL}/tareas`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=UTF-8"
-    },
-    body: JSON.stringify(taskData)
-  });
+  try {
+    const response = await fetch(`${API_URL}/tareas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify(taskData)
+    });
 
-  if (!response.ok) {
-    throw new Error("No se pudo guardar la tarea.");
+    if (!response.ok) {
+      throw new Error("No se pudo guardar la tarea.");
+    }
+
+    const createdTask = await response.json();
+    persistTaskLocally(createdTask, taskData.userId);
+    return createdTask;
+  } catch (error) {
+    // Si el servidor no está disponible, guardamos la tarea localmente con un id temporal.
+    const fallbackTask = {
+      ...taskData,
+      id: Date.now()
+    };
+
+    persistTaskLocally(fallbackTask, taskData.userId);
+    return fallbackTask;
   }
-
-  return response.json();
 }
 
 // Valida que el documento no este vacio antes de buscar al usuario.
