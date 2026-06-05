@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de tareas - Transferencia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">Actividad de transferencia</p>
+      <h1>Gestión de tareas por usuario</h1>
+      <p class="hero-text">
+        Busca un usuario existente en el servidor local y registra tareas sin recargar la página.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>1. Buscar usuario</h2>
+        <span class="badge">DOM + fetch</span>
+      </div>
+
+      <form id="search-form" novalidate>
+        <div class="field">
+          <label for="documento">Documento</label>
+          <input id="documento" name="documento" type="text" placeholder="Ejemplo: 1001" autocomplete="off" />
+          <small>Ingresa el documento de un usuario registrado en el servidor.</small>
+        </div>
+        <button type="submit" id="search-button">Buscar usuario</button>
+      </form>
+
+      <p id="search-feedback" class="feedback hidden"></p>
+
+      <article id="user-panel" class="user-panel hidden">
+        <h3>Usuario encontrado</h3>
+        <div class="user-grid">
+          <p><strong>Documento:</strong> <span id="user-document">-</span></p>
+          <p><strong>Nombre:</strong> <span id="user-name">-</span></p>
+          <p><strong>Correo:</strong> <span id="user-email">-</span></p>
+          <p><strong>ID:</strong> <span id="user-id">-</span></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>2. Registrar tarea</h2>
+        <span class="badge badge-muted">Se habilita al encontrar usuario</span>
+      </div>
+
+      <form id="task-form" novalidate aria-disabled="true">
+        <div class="field">
+          <label for="task-title">Título</label>
+          <input id="task-title" name="task-title" type="text" placeholder="Título de la tarea" disabled />
+        </div>
+
+        <div class="field">
+          <label for="task-description">Descripción</label>
+          <textarea id="task-description" name="task-description" rows="4" placeholder="Describe la tarea" disabled></textarea>
+        </div>
+
+        <div class="field">
+          <label for="task-status">Estado</label>
+          <select id="task-status" name="task-status" disabled>
+            <option value="">Selecciona un estado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Completada">Completada</option>
+          </select>
+        </div>
+
+        <div class="actions-row">
+          <button type="submit" id="task-button" disabled>Guardar tarea</button>
+          <button type="button" id="cancel-edit-button" class="secondary hidden">Cancelar edición</button>
+        </div>
+      </form>
+
+      <p id="task-feedback" class="feedback hidden"></p>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>3. Tareas registradas</h2>
+        <span id="task-count" class="badge">0 tareas</span>
+      </div>
+
+      <p id="empty-state" class="empty-state">
+        Busca un usuario para cargar sus tareas y habilitar el formulario.
+      </p>
+
+      <div id="table-wrapper" class="table-wrapper hidden">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Usuario</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tasks-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
