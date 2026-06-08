@@ -1,36 +1,52 @@
-const TASKS_URL = "http://10.5.225.223:3000/tasks";
+// La URL se arma con el host actual para soportar localhost y red local.
+const API_HOST = window.location.hostname || "localhost";
+const API_BASE_URL = `http://${API_HOST}:3000`;
 
-export async function getTasks() {
-    const response = await fetch(TASKS_URL);
-    return await response.json();
+// El backend actual de este repositorio publica la coleccion como "tareas".
+const TASKS_RESOURCE = "tareas";
+const TASKS_URL = `${API_BASE_URL}/${TASKS_RESOURCE}`;
+
+async function requestTasks(path = "", options = {}) {
+  const response = await fetch(`${TASKS_URL}${path}`, {
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8"
+    },
+    ...options
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => response.statusText);
+    throw new Error(errorText || "Error en la comunicacion con la API de tareas.");
+  }
+
+  if (response.status === 204) {
+    return null;
+  }
+
+  return await response.json();
+}
+
+// Este modulo deja encapsulado todo el fetch relacionado con tareas.
+export async function getTasksByUser(userId) {
+  return await requestTasks(`?userId=${encodeURIComponent(String(userId))}`);
 }
 
 export async function createTask(task) {
-    const response = await fetch(TASKS_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(task)
-    });
-
-    return await response.json();
+  return await requestTasks("", {
+    method: "POST",
+    body: JSON.stringify(task)
+  });
 }
 
 export async function updateTask(id, task) {
-    const response = await fetch(`${TASKS_URL}/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(task)
-    });
-
-    return await response.json();
+  return await requestTasks(`/${encodeURIComponent(String(id))}`, {
+    method: "PATCH",
+    body: JSON.stringify(task)
+  });
 }
 
 export async function deleteTask(id) {
-    await fetch(`${TASKS_URL}/${id}`, {
-        method: "DELETE"
-    });
+  await requestTasks(`/${encodeURIComponent(String(id))}`, {
+    method: "DELETE"
+  });
 }

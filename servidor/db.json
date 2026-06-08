@@ -196,7 +196,7 @@
       "name": "Comentario 7",
       "body": "PUT reemplaza la información."
     },
-    {
+    { 
       "id": "8",
       "postId": 7,
       "name": "Comentario 8",
