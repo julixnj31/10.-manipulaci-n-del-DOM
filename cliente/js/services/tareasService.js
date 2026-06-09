@@ -4,6 +4,7 @@ import {
   getTasksByUser,
   updateTask
 } from "../api/tareasApi.js";
+import { normalizeTasks } from "../utils/taskHelpers.js";
 
 const TASK_STORAGE_PREFIX = "transferencia-tareas";
 
@@ -70,7 +71,7 @@ function mergeServerAndLocalTasks(serverTasks, userId) {
 // Este servicio conserva la logica de respaldo local que ya tenia la app funcional.
 export async function cargarTareasPorUsuario(userId) {
   try {
-    const serverTasks = await getTasksByUser(userId);
+    const serverTasks = normalizeTasks(await getTasksByUser(userId));
     const tasks = mergeServerAndLocalTasks(serverTasks, userId);
 
     saveTasksToStorage(userId, tasks);
@@ -87,14 +88,15 @@ export async function cargarTareasPorUsuario(userId) {
   }
 }
 
-export async function guardarTarea({ user, taskData, editingTaskId }) {
+export async function guardarTarea({ user, taskData, editingTaskId, editingTask }) {
   const payload = {
     userId: user.id,
     documento: user.documento,
     userName: user.name,
     title: taskData.title,
     description: taskData.description,
-    status: taskData.status
+    status: taskData.status,
+    createdAt: editingTask?.createdAt || new Date().toISOString()
   };
 
   try {

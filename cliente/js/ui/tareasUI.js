@@ -9,7 +9,11 @@ export const tareasDOM = {
   taskCount: document.querySelector("#task-count"),
   emptyState: document.querySelector("#empty-state"),
   tableWrapper: document.querySelector("#table-wrapper"),
-  tasksBody: document.querySelector("#tasks-body")
+  tasksBody: document.querySelector("#tasks-body"),
+  filterStatus: document.querySelector("#task-filter-status"),
+  filterUser: document.querySelector("#task-filter-user"),
+  sortBy: document.querySelector("#task-sort-by"),
+  exportButton: document.querySelector("#export-tasks-button")
 };
 
 export function toggleTaskForm(enabled) {
@@ -106,6 +110,46 @@ export function updateTaskCount(totalTasks) {
   tareasDOM.taskCount.textContent = `${totalTasks} ${label}`;
 }
 
+export function resetTaskFilters() {
+  if (tareasDOM.filterStatus) {
+    tareasDOM.filterStatus.value = "all";
+  }
+
+  if (tareasDOM.filterUser) {
+    tareasDOM.filterUser.value = "all";
+  }
+
+  if (tareasDOM.sortBy) {
+    tareasDOM.sortBy.value = "createdAt";
+  }
+}
+
+export function updateUserFilterOptions(tasks) {
+  if (!tareasDOM.filterUser) {
+    return;
+  }
+
+  const userOptions = tasks
+    .map((task) => task.userName)
+    .filter((value, index, self) => value && self.indexOf(value) === index)
+    .sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+
+  tareasDOM.filterUser.replaceChildren(
+    createFilterOption("all", "Todos")
+  );
+
+  userOptions.forEach((userName) => {
+    tareasDOM.filterUser.appendChild(createFilterOption(userName, userName));
+  });
+}
+
+function createFilterOption(value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  return option;
+}
+
 export function showEmptyState(message) {
   tareasDOM.emptyState.textContent = message;
   tareasDOM.emptyState.classList.remove("hidden");
@@ -121,18 +165,14 @@ function hideEmptyState() {
 export function renderTasks(tasks, handlers) {
   tareasDOM.tasksBody.replaceChildren();
 
-  const sortedTasks = [...tasks].sort((firstTask, secondTask) => {
-    return Number(secondTask.id) - Number(firstTask.id);
-  });
+  updateTaskCount(tasks.length);
 
-  updateTaskCount(sortedTasks.length);
-
-  if (sortedTasks.length === 0) {
+  if (tasks.length === 0) {
     showEmptyState("Este usuario aun no tiene tareas registradas.");
     return;
   }
 
-  sortedTasks.forEach((task) => {
+  tasks.forEach((task) => {
     tareasDOM.tasksBody.appendChild(createTaskRow(task, handlers));
   });
 

@@ -1,10 +1,6 @@
 // La URL se arma con el host actual para soportar localhost y red local.
 const API_HOST = window.location.hostname || "localhost";
-const API_BASE_URL = `http://${API_HOST}:3000`;
-
-// El backend actual de este repositorio publica la coleccion como "tareas".
-const TASKS_RESOURCE = "tareas";
-const TASKS_URL = `${API_BASE_URL}/${TASKS_RESOURCE}`;
+const TASKS_URL = `http://${API_HOST}:3000/tareas`;
 
 async function requestTasks(path = "", options = {}) {
   const response = await fetch(`${TASKS_URL}${path}`, {
