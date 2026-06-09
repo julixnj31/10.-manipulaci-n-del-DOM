@@ -16,21 +16,16 @@ const DOM = {
   taskStatus: document.querySelector("#task-status"),
   taskFeedback: document.querySelector("#task-feedback"),
   taskCount: document.querySelector("#task-count"),
+  sortSelect: document.querySelector("#sort-select"),
+  exportButton: document.querySelector("#export-button"),
   emptyState: document.querySelector("#empty-state"),
   tableWrapper: document.querySelector("#table-wrapper"),
   tasksBody: document.querySelector("#tasks-body")
 };
 
-export function showFeedback(element, message, type) {
-  element.textContent = message;
-  element.className = `feedback ${type}`;
-  element.classList.remove("hidden");
-}
+import { showFeedback, hideFeedback } from "../utils/notificaciones.js";
 
-export function hideFeedback(element) {
-  element.textContent = "";
-  element.className = "feedback hidden";
-}
+export { showFeedback, hideFeedback };
 
 export function renderUser(user) {
   DOM.userDocument.textContent = user.documento;

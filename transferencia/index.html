@@ -86,6 +86,20 @@
         <span id="task-count" class="badge">0 tareas</span>
       </div>
 
+      <div class="sort-controls">
+        <label for="sort-select">Ordenar por:</label>
+        <select id="sort-select" disabled>
+          <option value="newest">Más recientes primero</option>
+          <option value="oldest">Más antiguos primero</option>
+          <option value="title-asc">Nombre (A-Z)</option>
+          <option value="title-desc">Nombre (Z-A)</option>
+          <option value="status">Por estado</option>
+        </select>
+        <button type="button" id="export-button" class="secondary" disabled>
+          Exportar JSON
+        </button>
+      </div>
+
       <p id="empty-state" class="empty-state">
         Busca un usuario para cargar sus tareas y habilitar el formulario.
       </p>

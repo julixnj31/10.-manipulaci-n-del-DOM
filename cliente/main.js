@@ -12,10 +12,13 @@ import {
 import { clearUserPanel, renderUser, usuariosDOM } from "./js/ui/usuariosUI.js";
 import { hideFeedback, showFeedback } from "./js/utils/notificaciones.js";
 import { validateSearchForm, validateTaskForm } from "./js/utils/validaciones.js";
+import { sortTasks, SORT_OPTIONS } from "./js/ui/sorting.js";
+import { exportTasksToJSON } from "./js/ui/exportTasks.js";
 
 let currentUser = null;
 let currentTasks = [];
 let editingTaskId = null;
+let currentSortOption = SORT_OPTIONS.NEWEST;
 
 function resetEditingState() {
   editingTaskId = null;
@@ -24,8 +27,9 @@ function resetEditingState() {
 
 function updateTaskList(tasks) {
   currentTasks = tasks;
+  const sortedTasks = sortTasks(currentTasks, currentSortOption);
 
-  renderTasks(currentTasks, {
+  renderTasks(sortedTasks, {
     onEdit: handleEditTask,
     onDelete: handleDeleteTask
   });
@@ -67,6 +71,8 @@ async function handleSearchSubmit(event) {
     currentUser = null;
     clearUserPanel();
     toggleTaskForm(false);
+    tareasDOM.sortSelect.disabled = true;
+    tareasDOM.exportButton.disabled = true;
     updateTaskList([]);
     return;
   }
@@ -74,6 +80,7 @@ async function handleSearchSubmit(event) {
   usuariosDOM.searchButton.disabled = true;
   clearUserPanel();
   toggleTaskForm(false);
+  tareasDOM.sortSelect.disabled = true;
   showFeedback(usuariosDOM.searchFeedback, "Buscando usuario...", "info");
   showEmptyState("Consultando informacion del usuario...");
 
@@ -84,6 +91,8 @@ async function handleSearchSubmit(event) {
       currentUser = null;
       showFeedback(usuariosDOM.searchFeedback, "El usuario no esta registrado.", "error");
       showEmptyState("No hay tareas para mostrar porque el usuario no existe.");
+      tareasDOM.sortSelect.disabled = true;
+      tareasDOM.exportButton.disabled = true;
       updateTaskList([]);
       return;
     }
@@ -91,6 +100,8 @@ async function handleSearchSubmit(event) {
     currentUser = user;
     renderUser(user);
     toggleTaskForm(true);
+    tareasDOM.sortSelect.disabled = false;
+    tareasDOM.exportButton.disabled = false;
     hideFeedback(usuariosDOM.searchFeedback);
 
     const tasks = await loadTasksForUser(currentUser.id);
@@ -105,6 +116,8 @@ async function handleSearchSubmit(event) {
     currentUser = null;
     clearUserPanel();
     toggleTaskForm(false);
+    tareasDOM.sortSelect.disabled = true;
+    tareasDOM.exportButton.disabled = true;
     updateTaskList([]);
 
     showFeedback(
@@ -222,15 +235,37 @@ function handleCancelEdit() {
   showFeedback(tareasDOM.taskFeedback, "Edicion cancelada.", "info");
 }
 
+function handleSortChange(event) {
+  currentSortOption = event.target.value;
+  updateTaskList(currentTasks);
+}
+
+function handleExportClick() {
+  if (currentTasks.length === 0) {
+    showFeedback(tareasDOM.taskFeedback, "No hay tareas para exportar.", "info");
+    return;
+  }
+
+  const timestamp = new Date().toISOString().split("T")[0];
+  const fileName = `tareas-${currentUser.documento}-${timestamp}.json`;
+  
+  exportTasksToJSON(currentTasks, fileName);
+  showFeedback(tareasDOM.taskFeedback, "Tareas exportadas correctamente.", "success");
+}
+
 function bindAppEvents() {
   usuariosDOM.searchForm.addEventListener("submit", handleSearchSubmit);
   tareasDOM.taskForm.addEventListener("submit", handleTaskSubmit);
   tareasDOM.cancelEditButton.addEventListener("click", handleCancelEdit);
+  tareasDOM.sortSelect.addEventListener("change", handleSortChange);
+  tareasDOM.exportButton.addEventListener("click", handleExportClick);
 }
 
 // Main es el punto de entrada: conecta eventos, servicios y renderizado.
 function initializeApp() {
   toggleTaskForm(false);
+  tareasDOM.sortSelect.disabled = true;
+  tareasDOM.exportButton.disabled = true;
   showEmptyState("Busca un usuario para cargar sus tareas y habilitar el formulario.");
   currentTasks = [];
   updateTaskCount(0);

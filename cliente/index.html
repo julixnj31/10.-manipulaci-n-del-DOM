@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion de tareas - Guia 13</title>
+    <title>Grupo 5</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -104,6 +104,20 @@
         <div class="card-header">
           <h2>3. Tareas registradas</h2>
           <span id="task-count" class="badge">0 tareas</span>
+        </div>
+
+        <div class="sort-controls">
+          <label for="sort-select">Ordenar por:</label>
+          <select id="sort-select" disabled>
+            <option value="newest">Más recientes primero</option>
+            <option value="oldest">Más antiguos primero</option>
+            <option value="title-asc">Nombre (A-Z)</option>
+            <option value="title-desc">Nombre (Z-A)</option>
+            <option value="status">Por estado</option>
+          </select>
+          <button type="button" id="export-button" class="secondary" disabled>
+            Exportar JSON
+          </button>
         </div>
 
         <p id="empty-state" class="empty-state">

@@ -78,10 +78,12 @@
     },
     {
       "id": "3",
-      "userId": 2,
-      "title": "Diseñar formulario de tareas",
-      "description": "Agregar campos de título, descripción y estado.",
-      "status": "Pendiente"
+      "userId": "2",
+      "title": "crear algo",
+      "description": "crear un boton",
+      "status": "Pendiente",
+      "documento": 1002,
+      "userName": "Carlos Gómez"
     },
     {
       "id": "4",
@@ -89,6 +91,33 @@
       "title": "Permitir edición de tareas",
       "description": "Carga en formulario e actualización con PATCH.",
       "status": "Pendiente"
+    },
+    {
+      "userId": "2",
+      "documento": 1002,
+      "userName": "Carlos Gómez",
+      "title": "crear",
+      "description": "saadsas",
+      "status": "En progreso",
+      "id": "04fiKZmSpeE"
+    },
+    {
+      "userId": "2",
+      "documento": 1002,
+      "userName": "Carlos Gómez",
+      "title": "c",
+      "description": "saca",
+      "status": "En progreso",
+      "id": "4O4ZD657CCg"
+    },
+    {
+      "userId": "5",
+      "documento": 1005,
+      "userName": "Laura Martínez",
+      "title": "dsada",
+      "description": "dsds",
+      "status": "Completada",
+      "id": "aA4vS9sNid0"
     }
   ],
   "posts": [
@@ -196,7 +225,7 @@
       "name": "Comentario 7",
       "body": "PUT reemplaza la información."
     },
-    { 
+    {
       "id": "8",
       "postId": 7,
       "name": "Comentario 8",

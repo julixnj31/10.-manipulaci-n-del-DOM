@@ -250,3 +250,29 @@ td {
   color: var(--muted);
   margin: 0;
 }
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.sort-controls label {
+  margin-bottom: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sort-controls select {
+  flex: 1;
+  max-width: 300px;
+}
+
+.sort-controls button {
+  white-space: nowrap;
+}

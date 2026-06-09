@@ -7,6 +7,8 @@ export const tareasDOM = {
   taskStatus: document.querySelector("#task-status"),
   taskFeedback: document.querySelector("#task-feedback"),
   taskCount: document.querySelector("#task-count"),
+  sortSelect: document.querySelector("#sort-select"),
+  exportButton: document.querySelector("#export-button"),
   emptyState: document.querySelector("#empty-state"),
   tableWrapper: document.querySelector("#table-wrapper"),
   tasksBody: document.querySelector("#tasks-body")
