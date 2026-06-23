@@ -4,35 +4,78 @@ import {
   fillTaskForm,
   renderTasks,
   resetTaskForm,
+  resetTaskFilters,
   showEmptyState,
   tareasDOM,
   toggleTaskForm,
-  updateTaskCount
+  updateTaskCount,
+  updateUserFilterOptions
 } from "./js/ui/tareasUI.js";
 import { clearUserPanel, renderUser, usuariosDOM } from "./js/ui/usuariosUI.js";
 import { hideFeedback, showFeedback } from "./js/utils/notificaciones.js";
+import { filterTasks, sortTasks } from "./js/utils/taskFilters.js";
+import { exportTasksAsJson } from "./js/utils/exportTasks.js";
 import { validateSearchForm, validateTaskForm } from "./js/utils/validaciones.js";
 import { sortTasks, SORT_OPTIONS } from "./js/ui/sorting.js";
 import { exportTasksToJSON } from "./js/ui/exportTasks.js";
 
 let currentUser = null;
 let currentTasks = [];
+let visibleTasks = [];
 let editingTaskId = null;
+<<<<<<< HEAD
 let currentSortOption = SORT_OPTIONS.NEWEST;
+=======
+let editingTask = null;
+let activeFilters = {
+  status: "all",
+  user: "all"
+};
+let activeSort = "createdAt";
+>>>>>>> fd39d529ffba0832a1cb72081273dfdaa96c5f09
 
 function resetEditingState() {
   editingTaskId = null;
+  editingTask = null;
   resetTaskForm();
+}
+
+function getVisibleTasks() {
+  return sortTasks(filterTasks(currentTasks, activeFilters), activeSort);
 }
 
 function updateTaskList(tasks) {
   currentTasks = tasks;
+<<<<<<< HEAD
   const sortedTasks = sortTasks(currentTasks, currentSortOption);
 
   renderTasks(sortedTasks, {
+=======
+  visibleTasks = getVisibleTasks();
+  updateUserFilterOptions(currentTasks);
+
+  renderTasks(visibleTasks, {
+>>>>>>> fd39d529ffba0832a1cb72081273dfdaa96c5f09
     onEdit: handleEditTask,
     onDelete: handleDeleteTask
   });
+}
+
+function refreshTaskView() {
+  visibleTasks = getVisibleTasks();
+  renderTasks(visibleTasks, {
+    onEdit: handleEditTask,
+    onDelete: handleDeleteTask
+  });
+}
+
+function setDefaultFilters() {
+  activeFilters = {
+    status: "all",
+    user: "all"
+  };
+  activeSort = "createdAt";
+  resetTaskFilters();
 }
 
 // Esta funcion conserva el respaldo local de tareas cuando el servidor no responde.
@@ -104,6 +147,7 @@ async function handleSearchSubmit(event) {
     tareasDOM.exportButton.disabled = false;
     hideFeedback(usuariosDOM.searchFeedback);
 
+    setDefaultFilters();
     const tasks = await loadTasksForUser(currentUser.id);
     updateTaskList(tasks);
 
@@ -158,7 +202,8 @@ async function handleTaskSubmit(event) {
     const result = await guardarTarea({
       user: currentUser,
       taskData: validation.data,
-      editingTaskId
+      editingTaskId,
+      editingTask
     });
 
     if (result.action === "update") {
@@ -197,6 +242,7 @@ async function handleTaskSubmit(event) {
 
 function handleEditTask(task) {
   editingTaskId = task.id;
+  editingTask = task;
   fillTaskForm(task);
 }
 
@@ -235,6 +281,7 @@ function handleCancelEdit() {
   showFeedback(tareasDOM.taskFeedback, "Edicion cancelada.", "info");
 }
 
+<<<<<<< HEAD
 function handleSortChange(event) {
   currentSortOption = event.target.value;
   updateTaskList(currentTasks);
@@ -250,6 +297,26 @@ function handleExportClick() {
   const fileName = `tareas-${currentUser.documento}-${timestamp}.json`;
   
   exportTasksToJSON(currentTasks, fileName);
+=======
+function handleFilterChange() {
+  activeFilters.status = tareasDOM.filterStatus?.value || "all";
+  activeFilters.user = tareasDOM.filterUser?.value || "all";
+  refreshTaskView();
+}
+
+function handleSortChange() {
+  activeSort = tareasDOM.sortBy?.value || "createdAt";
+  refreshTaskView();
+}
+
+function handleExportTasks() {
+  if (visibleTasks.length === 0) {
+    showFeedback(tareasDOM.taskFeedback, "No hay tareas visibles para exportar.", "info");
+    return;
+  }
+
+  exportTasksAsJson(visibleTasks, "tareas-visibles.json");
+>>>>>>> fd39d529ffba0832a1cb72081273dfdaa96c5f09
   showFeedback(tareasDOM.taskFeedback, "Tareas exportadas correctamente.", "success");
 }
 
@@ -257,8 +324,15 @@ function bindAppEvents() {
   usuariosDOM.searchForm.addEventListener("submit", handleSearchSubmit);
   tareasDOM.taskForm.addEventListener("submit", handleTaskSubmit);
   tareasDOM.cancelEditButton.addEventListener("click", handleCancelEdit);
+<<<<<<< HEAD
   tareasDOM.sortSelect.addEventListener("change", handleSortChange);
   tareasDOM.exportButton.addEventListener("click", handleExportClick);
+=======
+  tareasDOM.filterStatus?.addEventListener("change", handleFilterChange);
+  tareasDOM.filterUser?.addEventListener("change", handleFilterChange);
+  tareasDOM.sortBy?.addEventListener("change", handleSortChange);
+  tareasDOM.exportButton?.addEventListener("click", handleExportTasks);
+>>>>>>> fd39d529ffba0832a1cb72081273dfdaa96c5f09
 }
 
 // Main es el punto de entrada: conecta eventos, servicios y renderizado.
@@ -268,6 +342,8 @@ function initializeApp() {
   tareasDOM.exportButton.disabled = true;
   showEmptyState("Busca un usuario para cargar sus tareas y habilitar el formulario.");
   currentTasks = [];
+  visibleTasks = [];
+  setDefaultFilters();
   updateTaskCount(0);
   bindAppEvents();
 }

@@ -63,20 +63,6 @@
   ],
   "tareas": [
     {
-      "id": "1",
-      "userId": 1,
-      "title": "Configurar proyecto",
-      "description": "Crear la estructura inicial de la aplicación y la API.",
-      "status": "Completada"
-    },
-    {
-      "id": "2",
-      "userId": 1,
-      "title": "Buscar usuario por documento",
-      "description": "Implementar la búsqueda en el servidor y mostrar el panel.",
-      "status": "En progreso"
-    },
-    {
       "id": "3",
       "userId": "2",
       "title": "crear algo",
@@ -118,6 +104,60 @@
       "description": "dsds",
       "status": "Completada",
       "id": "aA4vS9sNid0"
+    },
+    {
+      "userId": "1",
+      "documento": 1001,
+      "userName": "Ana Torres",
+      "title": "css",
+      "description": "bonito",
+      "status": "Completada",
+      "id": "VVxUHLf7cSs"
+    },
+    {
+      "userId": "1",
+      "documento": 1001,
+      "userName": "Ana Torres",
+      "title": "Crear Crud",
+      "description": "Crear la estructura crud",
+      "status": "En progreso",
+      "id": "_HPhMz9PwzU"
+    },
+    {
+      "userId": "1",
+      "documento": 1001,
+      "userName": "Ana Torres",
+      "title": "Crear html",
+      "description": "Cambiar el titulo",
+      "status": "Pendiente",
+      "id": "f4Plfcby6v8"
+    },
+    {
+      "userId": "1",
+      "documento": 1001,
+      "userName": "Ana Torres",
+      "title": "mysql",
+      "description": "Registar En la base de datos",
+      "status": "Pendiente",
+      "id": "gcjocMxlUQo"
+    },
+    {
+      "userId": "1",
+      "documento": 1001,
+      "userName": "Ana Torres",
+      "title": "CCss",
+      "description": "CSs",
+      "status": "En progreso",
+      "id": "N9tOwrMyGKA"
+    },
+    {
+      "userId": "5",
+      "documento": 1005,
+      "userName": "Laura Martínez",
+      "title": "imprimir un hola mundo en python",
+      "description": "print:(hola mundo);",
+      "status": "Pendiente",
+      "id": "D8i20BASdNM"
     }
   ],
   "posts": [

@@ -106,6 +106,7 @@
           <span id="task-count" class="badge">0 tareas</span>
         </div>
 
+<<<<<<< HEAD
         <div class="sort-controls">
           <label for="sort-select">Ordenar por:</label>
           <select id="sort-select" disabled>
@@ -117,6 +118,37 @@
           </select>
           <button type="button" id="export-button" class="secondary" disabled>
             Exportar JSON
+=======
+        <div class="card-toolbar">
+          <div class="field">
+            <label for="task-filter-status">Filtrar por estado</label>
+            <select id="task-filter-status">
+              <option value="all">Todos</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En progreso">En progreso</option>
+              <option value="Completada">Completada</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="task-filter-user">Filtrar por usuario</label>
+            <select id="task-filter-user">
+              <option value="all">Todos</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="task-sort-by">Ordenar por</label>
+            <select id="task-sort-by">
+              <option value="createdAt">Fecha de creación</option>
+              <option value="title">Nombre</option>
+              <option value="status">Estado</option>
+            </select>
+          </div>
+
+          <button type="button" id="export-tasks-button" class="secondary">
+            Exportar tareas
+>>>>>>> fd39d529ffba0832a1cb72081273dfdaa96c5f09
           </button>
         </div>
 
